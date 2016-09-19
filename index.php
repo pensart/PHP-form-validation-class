@@ -5,12 +5,22 @@
     URL: http://guypensart.be
 |-------------------------------------------**/
 
+include 'FormValidatorClass.php';
+
 $placeholder =
     [
         'name'=>'Placeholder name',
         'email'=>'Placeholder email',
         'message'=>'Placeholder message'
     ];
+
+(empty($_POST))
+    ?   $validate = new FormValidatorClass(array())
+    :   ($validate = new FormValidatorClass($_POST));
+
+echo $validate->input['name']->value;
+echo $validate->input['email']->value;
+echo $validate->input['message']->value;
 
 ?>
 <!doctype html>
