@@ -16,12 +16,12 @@ $placeholder =
 
 (empty($_POST))
     ?   $validate = new FormValidatorClass(array())
-    :   ($validate = new FormValidatorClass($_POST));
-
-echo $validate->input['name']->value;
-echo $validate->input['email']->value;
-echo $validate->input['message']->value;
-
+    :   ($validate = new FormValidatorClass($_POST))
+    &&  $validate
+        ->item('name')->required('Name is required')->setValid()
+        ->item('email')->required('Name is required')->setValid()
+        ->item('message')->required('Name is required')->setValid()
+        ->clearFields();
 ?>
 <!doctype html>
 <html lang="en">
@@ -37,16 +37,21 @@ echo $validate->input['message']->value;
         form { min-width: 500px; }
         input, textarea { padding: .5em; width: 100%; margin-bottom: 20px; }
         textarea { height: 11em; }
+        .debug { color: hsl(0,0%,95%); text-align: center; margin-bottom: 30px;}
+        .debug-passed,.debug-error { margin: 5px; padding: 5px 10px; border-radius: 3px; }
+        .debug-passed { background-color: hsl(120,80%, 40%); }
+        .debug-error { background-color: hsl(0,80%, 40%); }
         .wrapper { display: table; margin: 0 auto; display: table; }
     </style>
 </head>
     <body>
-    <h1>'Contact me'</h1>
+    <h1><?= (!$_POST) ? 'Contact me' : ((!$validate->errorsFree()) ? 'Form failed' : 'Form success'); ?></h1>
+    <div class="debug"><?= (!$_POST) ? '' : $validate->debug(); ?></div>
     <div class="wrapper">
         <form method="POST">
             <input type="text" name="name" placeholder=<?= '"'.$placeholder['name'].'"';?> >
             <input type="text" name="email" placeholder=<?= '"'.$placeholder['email'].'"';?> >
-            <textarea name="message"><?= $placeholder['message'] ?></textarea>
+            <textarea name="message"><?= (!$_POST) ? $placeholder['message'] : $validate->getValue('message'); ?></textarea>
             <input type="submit" >
         </form>
     </div>
