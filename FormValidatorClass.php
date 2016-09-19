@@ -1,10 +1,19 @@
 <?php
 
-/**-------------------------------------------|
-    Created: 19/09/2016
-    Author: Guy Pensart
-    URL: http://guypensart.be
-|-------------------------------------------**/
+/**
+ * Created: 19/09/2016
+ * @author Guy Pensart
+ * @link http://guypensart.be my personal site
+*/
+
+// todo: next up, error schecking and debugging methods
+// todo: check min and max characters
+// todo: check if string only has letters
+// todo: check if email looks valid
+// todo: convert email to lowercase
+// todo: sanitize email
+// todo: filter the given email
+// todo: Check text-area and remove special characters
 
 /**
  * Class helper to split all inputs into objects
