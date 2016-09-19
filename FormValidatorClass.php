@@ -6,7 +6,7 @@
  * @link http://guypensart.be my personal site
 */
 
-// todo: next up, error schecking and debugging methods
+// todo: next up, error checking and debugging methods
 // todo: check min and max characters
 // todo: check if string only has letters
 // todo: check if email looks valid
