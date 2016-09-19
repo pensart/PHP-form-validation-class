@@ -8,9 +8,10 @@
 - [x] Basic form to work with
 - [x] Write class and helper class
 - [x] Define vars
-- [ ] Getters and Setters for the values
+- [x] Getters and Setters for the values
+- [x] Simple info block for debugging
 - [ ] Error check and reporting
-- [ ] Check required
+- [x] Check required
 - [ ] Check min and max number of characters
 - [ ] Check if string has letters
 - [ ] Check if email looks valid
