@@ -7,7 +7,7 @@ URL: http://guypensart.be
 |-------------------------------------------**/
 
 /**
- * Class split all inputs to objects
+ * Helper class split all inputs to objects
  */
 class splitToObject
 {

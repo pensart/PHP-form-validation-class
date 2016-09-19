@@ -6,8 +6,8 @@
 
 ### Work in progress
 - [x] Basic form to work with
-- [ ] Write class and helper class
-- [ ] Define vars
+- [x] Write class and helper class
+- [x] Define vars
 - [ ] Getters and Setters for the values
 - [ ] Error check and reporting
 - [ ] Check required
