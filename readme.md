@@ -3,6 +3,7 @@
 * Simple to setup
 * validate in sequence or linear
 * Extensible for your own validations
+* Docblocks https://phpdoc.org/docs/latest/references/phpdoc/basic-syntax.html
 
 ### Work in progress
 - [x] Basic form to work with
