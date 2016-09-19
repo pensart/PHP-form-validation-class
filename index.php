@@ -5,6 +5,9 @@
     URL: http://guypensart.be
 |-------------------------------------------**/
 
+// todo: refill inputs after submit when validation fails
+// todo: Change titel when validation fails (errorcheck)
+
 include 'FormValidatorClass.php';
 
 $placeholder =
