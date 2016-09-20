@@ -13,10 +13,10 @@
 - [x] Simple info block for debugging
 - [x] Error check and reporting
 - [x] Check required
-- [ ] Check min and max number of characters
-- [ ] Check if string has letters
-- [ ] Check if email looks valid
-- [ ] convert email to lowercase characters
-- [ ] Sanitize email
-- [ ] Filter the given email
-- [ ] Check text-area and remove special characters
+- [x] Check min and max number of characters
+- [x] Check if string has letters
+- [x] Check if email looks valid
+- [x] convert email to lowercase characters
+- [x] Sanitize email
+- [x] Filter the given email
+- [x] Check text-area and remove special characters

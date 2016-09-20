@@ -6,14 +6,6 @@
  * @link http://guypensart.be my personal site
 */
 
-// todo: check min and max characters
-// todo: check if string only has letters
-// todo: check if email looks valid
-// todo: convert email to lowercase
-// todo: sanitize email
-// todo: filter the given email
-// todo: Check text-area and remove special characters
-
 /**
  * Class helper to split all inputs into objects
  */
@@ -44,6 +36,10 @@ class FormValidatorClass
     $errorsFree = TRUE,
     $input,
     $currentInput;
+
+    private
+    $regExAlphabet = '/[^a-zA-Z -]+/',
+    $regExText = '/[^\n\ra-zA-Zé@()è!€$£%?.:+_ -]+/';
 
     /**
      * FormValidatorClass constructor.
@@ -124,10 +120,9 @@ class FormValidatorClass
      */
     private function setErrorMsg($errorMsg, $default, $params=NULL)
     {
-        $defaultString = $default;
         $this->errorsFree = FALSE;
         ($errorMsg == '')
-            ? $this->currentInput->error = sprintf($defaultString, $params)
+            ? $this->currentInput->error = sprintf($default, $params)
             : $this->currentInput->error = $errorMsg;
     }
 
@@ -203,6 +198,95 @@ class FormValidatorClass
             $this->nextRule = ( $this->currentInput->value != '') ? TRUE : FALSE;
             if (!$this->nextRule)
                 $this->setErrorMsg($errorMsg, 'This field is required');
+        }
+        return $this;
+    }
+
+    /**
+     * At least $number of characters
+     * @param $number
+     * @param null $errorMsg
+     * @return $this
+     */
+    function min($number, $errorMsg=NULL)
+    {
+        if ($this->nextRule && (!empty($this->currentInput->value)))
+        {
+            $this->nextRule = (strlen($this->currentInput->value) >= $number);
+            if (!$this->nextRule)
+                $this->setErrorMsg($errorMsg, 'Please enter more than %s characters', $number);
+        }
+        return $this;
+    }
+
+    /**
+     * maximum number of characters allowed
+     * @param $number
+     * @param null $errorMsg
+     * @return $this
+     */
+    function max($number, $errorMsg=NULL)
+    {
+        if ($this->nextRule && (!empty($this->currentInput->value)))
+        {
+            $this->nextRule = (strlen($this->currentInput->value) <= $number);
+            if (!$this->nextRule)
+                $this->setErrorMsg($errorMsg, 'Please enter less than %s characters', $number);
+        }
+        return $this;
+    }
+
+    /**
+     * Only letters validation
+     * @param null $errorMsg
+     * @return $this->nextRule
+     */
+    function alphabet($errorMsg=NULL)
+    {
+        if ($this->nextRule && (!empty($this->currentInput->value)))
+        {
+            // Automtic cleaning? just uncomment next line!
+            //$this->currentInput->value = preg_replace($this->regExAlphabet, '', $this->currentInput->value);
+            $this->nextRule = (!preg_match($this->regExAlphabet, $this->currentInput->value)) ? TRUE : FALSE;
+            if (!$this->nextRule)
+                $this->setErrorMsg($errorMsg, 'Only alphabetic letters a-z, spaces and (-) characters allowed');
+        }
+        return $this;
+    }
+
+    /**
+     * Valid e-mail validation
+     * @param null $errorMsg
+     * @return $this->nextRule
+     */
+    function email($errorMsg=NULL)
+    {
+        if ($this->nextRule && (!empty($this->currentInput->value)))
+        {
+            $this->currentInput->value = strtolower($this->currentInput->value);
+            $this->currentInput->value = filter_var($this->currentInput->value, FILTER_SANITIZE_EMAIL);
+            $this->nextRule = (!filter_var($this->currentInput->value, FILTER_VALIDATE_EMAIL) === false) ? TRUE : FALSE;
+            if (!$this->nextRule)
+                $this->setErrorMsg($errorMsg, 'Please enter a valid e-mail address');
+        }
+        return $this;
+    }
+
+    /**
+     * Prohibit special characters validation
+     * @param null $errorMsg
+     * @return $this->nextRule
+     */
+    function text($errorMsg=NULL)
+    {
+        if ($this->nextRule && (!empty($this->currentInput->value)))
+        {
+            // Automatic cleaning? just uncomment following lines!
+            //$this->currentInput->value = filter_var($this->currentInput->value, FILTER_SANITIZE_STRIPPED);
+            //$this->currentInput->value = preg_replace($this->regExText, '', $this->currentInput->value);
+            $this->nextRule = (!preg_match($this->regExText, $this->currentInput->value)) ? TRUE : FALSE;
+            if (!$this->nextRule)
+                $this->setErrorMsg($errorMsg, 'Remove special characters');
         }
         return $this;
     }

@@ -18,9 +18,9 @@ $placeholder =
     ?   $validate = new FormValidatorClass(array())
     :   ($validate = new FormValidatorClass($_POST))
     &&  $validate
-        ->item('name')->required('Name is required')->setValid()
-        ->item('email')->required('E-mail is required')->setValid()
-        ->item('message')->required('Message is required')->setValid()
+        ->item('name')->required('Name is required')->min(3)->max(40)->alphabet()->setValid()
+        ->item('email')->required('E-mail is required')->min(8)->max(60)->email()->setValid()
+        ->item('message')->required('Message is required')->min(22)->max(600)->text()->setValid()
         ->clearFields();
 ?>
 <!doctype html>
@@ -55,7 +55,7 @@ $placeholder =
                 <input type="text" name="email" placeholder=<?= '"'.$placeholder['email'].'"';?> value="<?= $validate->getValue('email'); ?>" >
 
                 <div class="error"><?= $validate->getError('message'); ?></div>
-                <textarea name="message" placeholder=<?= '"'.$placeholder['email'].'"';?>></textarea>
+                <textarea name="message" placeholder=<?= '"'.$placeholder['email'].'"';?>><?= (!$_POST) ? /* nothing */ : $validate->getValue('message'); ?></textarea>
                 <input type="submit" value='validate' >
             </form>
         </div>
