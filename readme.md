@@ -11,7 +11,7 @@
 - [x] Define vars
 - [x] Getters and Setters for the values
 - [x] Simple info block for debugging
-- [ ] Error check and reporting
+- [x] Error check and reporting
 - [x] Check required
 - [ ] Check min and max number of characters
 - [ ] Check if string has letters

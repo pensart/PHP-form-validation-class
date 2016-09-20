@@ -1,12 +1,9 @@
 <?php
-/**-------------------------------------------|
-    Created: 19/09/2016
-    Author: Guy Pensart
-    URL: http://guypensart.be
-|-------------------------------------------**/
-
-// todo: refill inputs after submit when validation fails
-// todo: Change titel when validation fails (errorcheck)
+/**
+ * Created: 19/09/2016
+ * @author Guy Pensart
+ * @link http://guypensart.be my personal site
+ */
 
 include 'FormValidatorClass.php';
 
@@ -22,8 +19,8 @@ $placeholder =
     :   ($validate = new FormValidatorClass($_POST))
     &&  $validate
         ->item('name')->required('Name is required')->setValid()
-        ->item('email')->required('Name is required')->setValid()
-        ->item('message')->required('Name is required')->setValid()
+        ->item('email')->required('E-mail is required')->setValid()
+        ->item('message')->required('Message is required')->setValid()
         ->clearFields();
 ?>
 <!doctype html>
@@ -44,19 +41,23 @@ $placeholder =
         .debug-passed,.debug-error { margin: 5px; padding: 5px 10px; border-radius: 3px; }
         .debug-passed { background-color: hsl(120,80%, 40%); }
         .debug-error { background-color: hsl(0,80%, 40%); }
-        .wrapper { display: table; margin: 0 auto; display: table; }
+        .wrapper { display: table; margin: 0 auto; }
     </style>
 </head>
     <body>
-    <h1><?= (!$_POST) ? 'Contact me' : ((!$validate->errorsFree()) ? 'Form failed' : 'Form success'); ?></h1>
-    <div class="debug"><?= (!$_POST) ? '' : $validate->debug(); ?></div>
-    <div class="wrapper">
-        <form method="POST">
-            <input type="text" name="name" placeholder=<?= '"'.$placeholder['name'].'"';?> >
-            <input type="text" name="email" placeholder=<?= '"'.$placeholder['email'].'"';?> >
-            <textarea name="message"><?= (!$_POST) ? $placeholder['message'] : $validate->getValue('message'); ?></textarea>
-            <input type="submit" >
-        </form>
-    </div>
+        <h1><?= (!$_POST) ? 'Contact me' : ((!$validate->errorsFree()) ? 'Form failed' : 'Form success'); ?></h1>
+        <div class="debug"><?= (!$_POST) ? '' : $validate->debug(); ?></div>
+        <div class="wrapper">
+            <form method="POST">
+                <div class="error"><?= $validate->getError('name'); ?></div>
+                <input type="text" name="name" placeholder=<?= '"'.$placeholder['name'].'"';?> value="<?= $validate->getValue('name'); ?>" >
+                <div class="error"><?= $validate->getError('email'); ?></div>
+                <input type="text" name="email" placeholder=<?= '"'.$placeholder['email'].'"';?> value="<?= $validate->getValue('email'); ?>" >
+
+                <div class="error"><?= $validate->getError('message'); ?></div>
+                <textarea name="message" placeholder=<?= '"'.$placeholder['email'].'"';?>></textarea>
+                <input type="submit" value='validate' >
+            </form>
+        </div>
     </body>
 </html>

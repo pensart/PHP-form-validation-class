@@ -6,7 +6,6 @@
  * @link http://guypensart.be my personal site
 */
 
-// todo: next up, error checking and debugging methods
 // todo: check min and max characters
 // todo: check if string only has letters
 // todo: check if email looks valid
@@ -93,6 +92,46 @@ class FormValidatorClass
     }
 
     /**
+     * swap errorsFree and nextRule bool
+     * @param $error
+     * @return $this
+     */
+    function setError($error)
+    {
+        $this->currentInput->error = $error;
+        $this->errorsFree = FALSE;
+        $this->nextRule = FALSE;
+        return $this;
+    }
+
+    /**
+     * Output the error
+     * @param $name
+     * @return string
+     */
+    function getError($name)
+    {
+        if (isset($this->input[$name]))
+            return $this->input[$name]->error;
+        return '';
+    }
+
+    /**
+     * set which error message to use
+     * @param $errorMsg
+     * @param $default
+     * @param null $params
+     */
+    private function setErrorMsg($errorMsg, $default, $params=NULL)
+    {
+        $defaultString = $default;
+        $this->errorsFree = FALSE;
+        ($errorMsg == '')
+            ? $this->currentInput->error = sprintf($defaultString, $params)
+            : $this->currentInput->error = $errorMsg;
+    }
+
+    /**
      * Check if there are no errors
      * @return bool
      */
@@ -106,7 +145,7 @@ class FormValidatorClass
      */
     function clearFields()
     {
-        if ($this->errorsfree())
+        if ($this->errorsFree())
             foreach($this->input as $key=>$value):
                 $this->input[$key]->value = '';
             endforeach;
@@ -149,19 +188,21 @@ class FormValidatorClass
             $this->input[$name] = new splitToObject('');
         $this->nextRule = TRUE;
         $this->currentInput = $this->input[$name];
-
         return $this;
     }
 
     /**
-     * Field is required
+     * Mark field as required
+     * @param null $errorMsg
      * @return $this
      */
-    function required()
+    function required($errorMsg=NULL)
     {
         if ($this->nextRule)
         {
             $this->nextRule = ( $this->currentInput->value != '') ? TRUE : FALSE;
+            if (!$this->nextRule)
+                $this->setErrorMsg($errorMsg, 'This field is required');
         }
         return $this;
     }
