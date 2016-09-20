@@ -55,7 +55,7 @@ $placeholder =
                 <input type="text" name="email" placeholder=<?= '"'.$placeholder['email'].'"';?> value="<?= $validate->getValue('email'); ?>" >
 
                 <div class="error"><?= $validate->getError('message'); ?></div>
-                <textarea name="message" placeholder=<?= '"'.$placeholder['email'].'"';?>><?= (!$_POST) ? /* nothing */ : $validate->getValue('message'); ?></textarea>
+                <textarea name="message" placeholder=<?= '"'.$placeholder['email'].'"';?>><?= $validate->getValue('message'); ?></textarea>
                 <input type="submit" value='validate' >
             </form>
         </div>
