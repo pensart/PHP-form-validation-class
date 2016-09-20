@@ -214,7 +214,7 @@ class FormValidatorClass
         {
             $this->nextRule = (strlen($this->currentInput->value) >= $number);
             if (!$this->nextRule)
-                $this->setErrorMsg($errorMsg, 'Please enter more than %s characters', $number);
+                $this->setErrorMsg($errorMsg, 'Minimum %s characters', $number);
         }
         return $this;
     }
@@ -231,7 +231,7 @@ class FormValidatorClass
         {
             $this->nextRule = (strlen($this->currentInput->value) <= $number);
             if (!$this->nextRule)
-                $this->setErrorMsg($errorMsg, 'Please enter less than %s characters', $number);
+                $this->setErrorMsg($errorMsg, 'Maximum %s characters', $number);
         }
         return $this;
     }
@@ -249,7 +249,7 @@ class FormValidatorClass
             //$this->currentInput->value = preg_replace($this->regExAlphabet, '', $this->currentInput->value);
             $this->nextRule = (!preg_match($this->regExAlphabet, $this->currentInput->value)) ? TRUE : FALSE;
             if (!$this->nextRule)
-                $this->setErrorMsg($errorMsg, 'Only alphabetic letters a-z, spaces and (-) characters allowed');
+                $this->setErrorMsg($errorMsg, 'Only alphabetic letters a-z, spaces and (-) characters');
         }
         return $this;
     }
@@ -267,7 +267,7 @@ class FormValidatorClass
             $this->currentInput->value = filter_var($this->currentInput->value, FILTER_SANITIZE_EMAIL);
             $this->nextRule = (!filter_var($this->currentInput->value, FILTER_VALIDATE_EMAIL) === false) ? TRUE : FALSE;
             if (!$this->nextRule)
-                $this->setErrorMsg($errorMsg, 'Please enter a valid e-mail address');
+                $this->setErrorMsg($errorMsg, 'This is not a valid e-mail address');
         }
         return $this;
     }
