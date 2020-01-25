@@ -23,6 +23,7 @@ $placeholder =
         ->item('message')->required('Message is required')->min(22)->max(600)->text()->setValid()
         ->clearFields();
 ?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -48,7 +49,7 @@ $placeholder =
         <h1><?= (!$_POST) ? 'Contact me' : ((!$validate->errorsFree()) ? 'Form failed' : 'Form success'); ?></h1>
         <div class="debug"><?= (!$_POST) ? '' : $validate->debug(); ?></div>
         <div class="wrapper">
-            <form method="POST">
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <div class="error"><?= $validate->getError('name'); ?></div>
                 <input type="text" name="name" placeholder=<?= '"'.$placeholder['name'].'"';?> value="<?= $validate->getValue('name'); ?>" >
                 <div class="error"><?= $validate->getError('email'); ?></div>

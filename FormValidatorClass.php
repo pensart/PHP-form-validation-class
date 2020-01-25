@@ -17,6 +17,9 @@ class splitToObject
      */
     function __construct($value)
     {
+        $value = trim($value);
+        $value = stripslashes($value);
+        $value = htmlspecialchars($value);
         $this->value = $value;
         $this->error = '';
         $this->valid = FALSE;
